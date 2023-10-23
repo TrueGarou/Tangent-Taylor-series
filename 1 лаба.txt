@@ -1,5 +1,5 @@
 const float accuracy = 0.1; //точность знаков
-const float angle_0 = 0.0; //tang = 0
+const float angle_0 = 0.0; //tang угла = 0
 const float angle_1 = 3.1415 / 6.0; //tang = +-0.5773
 const float angle_2 = 3.1415 / 4.0; //tang = +-1
 const float angle_3 = 3.1415 / 3.0; //tang = +-1.7320
