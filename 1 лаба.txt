@@ -1,0 +1,113 @@
+const float accuracy = 0.1; //точность
+const float angle_0 = 0.0; //tang = 0
+const float angle_1 = 3.1415 / 6.0; //tang = +-0.5773
+const float angle_2 = 3.1415 / 4.0; //tang = +-1
+const float angle_3 = 3.1415 / 3.0; //tang = +-1.7320
+const float angle_4 = 3.1415 / 2.0; //неправильные значения
+const float angle_5 = 3.1415 / 1.0; //неправильные значения
+const float angle_6 = 3.1415; //неправильные значения
+
+float bernuli(int n) {
+    float A;
+    n = n * 2; //берём только чётные
+    switch (n) {
+    case 2:
+        A = 1.0 / 6.0;
+        break;
+    case 4:
+        A = 1.0 / 30.0;
+        break;
+    case 6:
+        A = 1.0 / 42.0;
+        break;
+    case 8:
+        A = 1.0 / 30.0;
+        break;
+    case 10:
+        A = 5.0 / 66.0;
+        break;
+    case 12:
+        A = 691.0 / 2730.0;
+        break;
+    case 14:
+        A = 7.0 / 6.0;
+        break;
+    }
+    return A;
+}
+
+float factorial(int n) {
+    int fac;
+    n = n * 2;
+    fac = n;
+    if (n == 0) {
+        return 1; //0! == 1
+    }
+    else {
+        while (n != 1) {
+            fac = fac * (n - 1);
+            n = n - 1;
+        }
+    }
+
+    return fac;
+}
+
+//x ** (2n - 1)
+float power_1(float x, int n) {
+    float s = x;
+    n = (2 * n) - 1;
+    for (n; n != 1; n = n - 1) {
+        x *= s;
+    }
+    return x;
+}
+
+// x ** (2n) & x ** (2n - 1)
+float power_2(int n) {
+    int x = 2;
+    int s = x;
+    n = 2 * n;
+    for (n; n != 1; n = n - 1) {
+        x *= s;
+    }
+    s = x * (x - 1);
+    return s;
+}
+
+float tangens(float n, float x) {
+    float res = 0.0;
+    float formul;
+    while (n != 0) {
+        formul = (bernuli(n) * power_1(x, n) * power_2(n)) / factorial(n);
+        res = res + formul;
+        n = n - 1; 
+    }
+    //printf("%lf\n", res);
+    return res;
+}
+
+int test(float valuev) {
+    if (tangens(6.0, valuev) < 2.0) {
+        int test_1;
+        test_1 = tangens(6.0, valuev) <= (0 + accuracy) && tangens(6.0, valuev) >= (0 - accuracy) ? 0 : 1; //&& - если оба условия True    // условие ? True : Faslse
+        int test_2;
+        test_2 = tangens(6.0, valuev) <= (0.5773 + accuracy) && tangens(6.0, valuev) >= (0.5773 - accuracy) ? 0 : 1;
+        int test_3;
+        test_3 = tangens(6.0, valuev) <= (1.0 + accuracy) && tangens(6.0, valuev) >= (1.0 - accuracy) ? 0 : 1;
+        int test_4;
+        test_4 = tangens(6.0, valuev) <= (1.7320 + accuracy) && tangens(6.0, valuev) >= (1.7320 - accuracy) ? 0 : 1;
+        int total;
+        total = test_1 & test_2 & test_3 & test_4;
+        return total;
+    }
+    else {
+        return 666;
+    }
+
+}
+
+int main() {
+    int result = test(angle_2); //test(val)
+    return result;
+}
